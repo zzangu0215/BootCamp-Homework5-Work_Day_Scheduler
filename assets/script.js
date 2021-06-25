@@ -1,7 +1,7 @@
 // declare global variables
 
 // Set the beginning hour to be 8AM
-var hourBeginning = moment().startOf('day').add(16,'h');
+var hourBeginning = moment().startOf('day').add(8,'h');
 // totalHours = 8AM to 6PM = 11 hours
 var totalHours = 11;
 // Get current hour
@@ -13,14 +13,14 @@ var currentState;
 
 function displayToday() {
     // today display
-    var today = moment().format("llll");
+    var today = moment().format("dddd, MMMM Do, HH:mm A");
     $('#currentDay').text(today);
 }
 
 function fillTimeTable() {
 
     for (var hour = 0; hour < totalHours; hour++) { 
-        var realHour = hour + 17;
+        var realHour = hour + 9;
         // add one hour while iterating for loop
         timeTableElement = hourBeginning.add(1,'h').format('HH:mm a');
 
@@ -49,6 +49,7 @@ function fillTimeTable() {
     loadSchedule();
 }
 
+// function for save schedule in the local storage
 function saveSchedule() {
 
     var keyName = $(this).parent().attr('id');
@@ -57,10 +58,11 @@ function saveSchedule() {
     localStorage.setItem(keyName, keyValue);
 }
 
+// functino to get back the data from the local storage and print it out in to the textarea attribute
 function loadSchedule() {
 
     for (var hour = 0; hour < totalHours; hour++) {
-        var realHour = hour + 17;
+        var realHour = hour + 9;
         var loadedSchedule = localStorage.getItem(`hour-${realHour}`);
 
         $(`.${realHour}`).val(loadedSchedule);
@@ -73,10 +75,12 @@ displayToday();
 fillTimeTable();
 $('.saveBtn').on('click', saveSchedule);
 
+// updating date and time every 1 minute
 setInterval(function() {
     displayToday();
 }, 60000);
 
+// updating entire time table every 10 minutes
 setInterval(function() {
     fillTimeTable();
 }, 600000);
