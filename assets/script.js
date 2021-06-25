@@ -1,7 +1,7 @@
 // declare global variables
 
 // Set the beginning hour to be 8AM
-var hourBeginning = moment().startOf('day').add(8,'h');
+var hourBeginning = moment().startOf('day').add(7,'h');
 // totalHours = 8AM to 6PM = 11 hours
 var totalHours = 11;
 // Get current hour
@@ -20,9 +20,9 @@ function displayToday() {
 function fillTimeTable() {
 
     for (var hour = 0; hour < totalHours; hour++) { 
-        var realHour = hour + 9;
+        var realHour = hour + 8;
         // add one hour while iterating for loop
-        timeTableElement = hourBeginning.add(1,'h').format('HH:mm a');
+        timeTableElement = hourBeginning.add(1,'h').format('HH:mm A');
 
         // determine the currentState based on the conditions
         if (currentHour == realHour) {
@@ -42,7 +42,7 @@ function fillTimeTable() {
                 </button>
             </div>`;
 
-        $("#addAll").append(appendBlock);
+        $(".container").append(appendBlock);
 
     }
 
@@ -62,7 +62,7 @@ function saveSchedule() {
 function loadSchedule() {
 
     for (var hour = 0; hour < totalHours; hour++) {
-        var realHour = hour + 9;
+        var realHour = hour + 8;
         var loadedSchedule = localStorage.getItem(`hour-${realHour}`);
 
         $(`.${realHour}`).val(loadedSchedule);
